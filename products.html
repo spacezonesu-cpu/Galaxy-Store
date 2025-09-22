@@ -1,0 +1,2525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galaxy Store - Premium Electronics</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #1a4b8c;
+            --secondary: #2a6fd7;
+            --accent: #ff6b35;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --white: #ffffff;
+            --gray: #6c757d;
+            --success: #28a745;
+        }
+
+        body {
+            background-color: #f5f7ff;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--white);
+            padding: 15px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo a {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+        }
+
+        .logo i {
+            font-size: 28px;
+            color: #ffd700;
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+        }
+
+        .logo h1 {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .search-cart {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: var(--white);
+            border-radius: 50px;
+            overflow: hidden;
+            padding: 5px 15px;
+        }
+
+        .search-box input {
+            border: none;
+            outline: none;
+            padding: 8px;
+            width: 250px;
+            font-size: 16px;
+        }
+
+        .search-box button {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: var(--primary);
+        }
+
+        .cart-icon {
+            position: relative;
+            font-size: 24px;
+            color: var(--white);
+            cursor: pointer;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            justify-content: center;
+            padding: 15px 0;
+        }
+
+        .nav-links li {
+            margin: 0 20px;
+            position: relative;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            font-size: 17px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a.active:after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            padding: 20px 0;
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        /* Shop Controls */
+        .shop-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .filter-section select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .view-options button {
+            background: var(--light);
+            border: 1px solid #ddd;
+            padding: 8px 12px;
+            margin-left: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .view-options button.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Products Grid */
+        .section-title {
+            text-align: center;
+            margin: 40px 0 30px;
+            color: var(--primary);
+            font-size: 32px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .product {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+
+        .product:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .sale-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: var(--accent);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .admin-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--primary);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .admin-logged-in .admin-badge {
+            display: block;
+        }
+
+        .product-img {
+            height: 200px;
+            width: 100%;
+            background-color: #f5f7ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .product-img i {
+            font-size: 64px;
+            color: var(--secondary);
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .product-category {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .old-price {
+            text-decoration: line-through;
+            color: var(--gray);
+            font-size: 16px;
+        }
+
+        .product-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .view-btn, .add-cart-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .view-btn {
+            background: var(--light);
+            color: var(--dark);
+        }
+
+        .view-btn:hover {
+            background: #e9ecef;
+        }
+
+        .add-cart-btn {
+            background: var(--primary);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .add-cart-btn:hover {
+            background: var(--secondary);
+        }
+
+        .admin-actions {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .admin-logged-in .admin-actions {
+            display: block;
+        }
+
+        .edit-product-btn {
+            width: 100%;
+            padding: 10px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .edit-product-btn:hover {
+            background: #e55a2a;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin: 40px 0;
+        }
+
+        .pagination a {
+            color: var(--primary);
+            padding: 8px 16px;
+            text-decoration: none;
+            border: 1px solid #ddd;
+            margin: 0 4px;
+            border-radius: 5px;
+        }
+
+        .pagination a.active {
+            background-color: var(--primary);
+            color: white;
+            border: 1px solid var(--primary);
+        }
+
+        .pagination a:hover:not(.active) {
+            background-color: #ddd;
+        }
+
+        /* Cart Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            overflow: auto;
+        }
+
+        .modal-content {
+            background: var(--white);
+            margin: 5% auto;
+            padding: 20px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 800px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            animation: modalFade 0.3s;
+        }
+
+        @keyframes modalFade {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h2 {
+            color: var(--primary);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--gray);
+        }
+
+        .cart-items {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 15px;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            align-items: center;
+        }
+
+        .cart-item-img {
+            width: 80px;
+            height: 80px;
+            background: #f5f7ff;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cart-item-img i {
+            font-size: 32px;
+            color: var(--secondary);
+        }
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-item-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .cart-item-price {
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .cart-item-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quantity-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: none;
+            background: var(--light);
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .quantity-btn:hover {
+            background: #e9ecef;
+        }
+
+        .remove-item {
+            color: #dc3545;
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-left: auto;
+        }
+
+        .cart-summary {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .summary-total {
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--primary);
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+        }
+
+        .cart-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .continue-shopping {
+            padding: 12px 20px;
+            background: var(--light);
+            color: var(--dark);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .checkout-btn {
+            flex: 1;
+            padding: 12px 20px;
+            background: var(--success);
+            color: var(--white);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .checkout-btn:hover {
+            background: #218838;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--gray);
+        }
+
+        .empty-cart i {
+            font-size: 64px;
+            margin-bottom: 20px;
+            color: #dee2e6;
+        }
+
+        /* Product Detail Modal */
+        .product-detail-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            overflow: auto;
+        }
+
+        .product-detail-content {
+            background: var(--white);
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 900px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            animation: modalFade 0.3s;
+        }
+
+        .product-detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
+        }
+
+        .product-detail-header h2 {
+            color: var(--primary);
+        }
+
+        .product-detail-body {
+            display: flex;
+            gap: 30px;
+        }
+
+        .product-detail-image {
+            flex: 1;
+            background: #f5f7ff;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        .product-detail-image i {
+            font-size: 120px;
+            color: var(--secondary);
+        }
+
+        .product-detail-info {
+            flex: 2;
+        }
+
+        .product-detail-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .product-detail-category {
+            font-size: 16px;
+            color: var(--gray);
+            margin-bottom: 20px;
+            padding: 5px 15px;
+            background: #f8f9fa;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .product-detail-price {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .product-detail-current {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .product-detail-old {
+            text-decoration: line-through;
+            color: var(--gray);
+            font-size: 20px;
+        }
+
+        .product-detail-description {
+            margin-bottom: 25px;
+            line-height: 1.8;
+        }
+
+        .product-detail-specs {
+            margin-bottom: 25px;
+        }
+
+        .specs-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .specs-list {
+            list-style: none;
+        }
+
+        .specs-list li {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .specs-list li:before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+            display: inline-block;
+            width: 20px;
+        }
+
+        .product-detail-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .detail-add-cart {
+            flex: 2;
+            padding: 15px;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 16px;
+        }
+
+        .detail-add-cart:hover {
+            background: var(--secondary);
+        }
+
+        /* Edit Product Form */
+        .edit-product-form {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        .cancel-btn, .save-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .cancel-btn {
+            background: #6c757d;
+            color: white;
+        }
+
+        .save-btn {
+            background: var(--success);
+            color: white;
+        }
+
+        .add-spec-btn, .remove-spec-btn {
+            padding: 5px 10px;
+            margin-left: 10px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .add-spec-btn {
+            background: var(--primary);
+            color: white;
+        }
+
+        .remove-spec-btn {
+            background: #dc3545;
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--white);
+            padding: 50px 0 20px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        .footer-column p, .footer-column a {
+            margin-bottom: 15px;
+            display: block;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column a:hover {
+            color: var(--white);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            font-size: 18px;
+        }
+
+        .social-icons a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Admin Login Modal */
+        .admin-login-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            overflow: auto;
+        }
+
+        .admin-login-content {
+            background: var(--white);
+            margin: 10% auto;
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            animation: modalFade 0.3s;
+        }
+
+        .admin-login-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
+        }
+
+        .admin-login-header h2 {
+            color: var(--primary);
+        }
+
+        .admin-login-form .form-group {
+            margin-bottom: 20px;
+        }
+
+        .admin-login-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .admin-login-form input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        .admin-login-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        .admin-login-btn {
+            flex: 1;
+            padding: 12px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .admin-login-btn:hover {
+            background: var(--secondary);
+        }
+
+        .admin-cancel-btn {
+            padding: 12px 20px;
+            background: var(--light);
+            color: var(--dark);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .admin-logout-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .admin-logged-in .admin-logout-btn {
+            display: block;
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        /* Cart Notification */
+        .cart-notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--success);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            display: none;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .cart-notification.show {
+            display: flex;
+            animation: fadeIn 0.5s, fadeOut 0.5s 2.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(20px); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+            
+            .product-detail-body {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .search-box input {
+                width: 180px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+            }
+            
+            .shop-controls {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .modal-content {
+                width: 95%;
+                margin: 10% auto;
+            }
+            
+            .cart-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .cart-actions {
+                flex-direction: column;
+            }
+            
+            .product-detail-content {
+                padding: 20px;
+            }
+            
+            .product-detail-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Admin Login Modal -->
+    <div class="admin-login-modal" id="adminLoginModal">
+        <div class="admin-login-content">
+            <div class="admin-login-header">
+                <h2>Admin Login</h2>
+                <button class="close-modal" id="closeAdminLogin">&times;</button>
+            </div>
+            
+            <div class="admin-login-form">
+                <div class="form-group">
+                    <label for="adminPassword">Admin Password</label>
+                    <input type="password" id="adminPassword" placeholder="Enter admin password">
+                    <div class="error-message" id="passwordError">Incorrect password. Please try again.</div>
+                </div>
+                
+                <div class="admin-login-actions">
+                    <button class="admin-cancel-btn" id="cancelAdminLogin">Cancel</button>
+                    <button class="admin-login-btn" id="submitAdminLogin">Login</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Your Shopping Cart</h2>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            
+            <div class="cart-items" id="cartItems">
+                <div class="empty-cart" id="emptyCart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <p>Your cart is empty</p>
+                </div>
+            </div>
+            
+            <div class="cart-summary">
+                <div class="summary-row summary-total">
+                    <span>Total:</span>
+                    <span id="cartTotal">Ksh 0.00</span>
+                </div>
+            </div>
+            
+            <div class="cart-actions">
+                <button class="continue-shopping" id="continueShopping">Continue Shopping</button>
+                <button class="checkout-btn" id="checkoutBtn">
+                    <i class="fab fa-whatsapp"></i> Proceed to WhatsApp Checkout
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Detail Modal -->
+    <div class="product-detail-modal" id="productDetailModal">
+        <div class="product-detail-content">
+            <div class="product-detail-header">
+                <h2>Product Details</h2>
+                <button class="close-modal" id="closeDetailModal">&times;</button>
+            </div>
+            
+            <div class="product-detail-body" id="productDetailBody">
+                <!-- Product details will be dynamically added here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <a href="index.html">
+                    <i class="fas fa-stars"></i>
+                    <h1>Galaxy Store</h1>
+                </a>
+            </div>
+            <div class="search-cart">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Search products...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                <div class="cart-icon" id="cartIcon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+                <button class="admin-logout-btn" id="adminLogoutBtn">Logout Admin</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html" class="active">Shop</a></li>
+                <li><a href="categories.html">Categories</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <a href="index.html">Home</a> > <span>Shop All Products</span>
+        </div>
+
+        <!-- Shop Controls -->
+        <div class="shop-controls">
+            <div class="filter-section">
+                <select id="categoryFilter">
+                    <option value="all">All Categories</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="audio">Audio</option>
+                    <option value="computers">Computers</option>
+                    <option value="phones">Phones & Tablets</option>
+                    <option value="wearables">Wearables</option>
+                    <option value="accessories">Accessories</option>
+                </select>
+                <select id="sortBy">
+                    <option value="default">Sort by</option>
+                    <option value="price-low">Price: Low to High</option>
+                    <option value="price-high">Price: High to Low</option>
+                    <option value="name">Name</option>
+                </select>
+            </div>
+            <div class="view-options">
+                <button id="gridView" class="active"><i class="fas fa-th"></i></button>
+                <button id="listView"><i class="fas fa-list"></i></button>
+            </div>
+        </div>
+
+        <!-- Products Section -->
+        <h2 class="section-title">All Products</h2>
+        <div class="products-grid" id="productsGrid">
+            <!-- Products will be dynamically generated here -->
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            <a href="#">&laquo;</a>
+            <a href="#" class="active">1</a>
+            <a href="#">2</a>
+            <a href="#">3</a>
+            <a href="#">4</a>
+            <a href="#">5</a>
+            <a href="#">&raquo;</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="Returns & Exchange.html">Returns & Exchanges</a></li>
+                        <li><a href="Shipping Info.html">Shipping Info</a></li>
+                        <li><a href="Our Story.html">Our Story</a></li>
+                        <li><a href="Support.html">Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Galaxy Street, Nairobi, Kenya</p>
+                    <p><i class="fas fa-phone"></i> +254 700 123 456</p>
+                    <p><i class="fas fa-envelope"></i> info@galaxystore.com</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Follow Us</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Galaxy Store. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Notification -->
+    <div class="cart-notification" id="cartNotification">
+        <i class="fas fa-check-circle"></i>
+        <span>Product added to cart successfully!</span>
+    </div>
+
+    <script>
+        // Admin configuration
+        const ADMIN_PASSWORD = "GalaxyAdmin2025!"; // Admin password
+        
+        // Product data with detailed information - 50 products
+        const products = [
+            { 
+                id: 1, 
+                name: "Wireless Space Headphones", 
+                category: "audio", 
+                price: 10800, 
+                oldPrice: 15600, 
+                icon: "headphones",
+                description: "Experience stellar sound quality with our premium wireless headphones. Featuring active noise cancellation, 30-hour battery life, and comfortable over-ear design for extended listening sessions.",
+                specs: ["Active Noise Cancellation", "30-hour battery life", "Bluetooth 5.0", "Built-in microphone", "Foldable design"]
+            },
+            { 
+                id: 2, 
+                name: "Stellar Performance Laptop", 
+                category: "computers", 
+                price: 120000, 
+                oldPrice: 156000, 
+                icon: "laptop",
+                description: "Power through your work and entertainment with our high-performance laptop. Featuring a fast processor, ample storage, and a brilliant display for all your computing needs.",
+                specs: ["15.6\" Full HD Display", "Intel Core i7 processor", "16GB RAM", "512GB SSD", "Backlit keyboard"]
+            },
+            { 
+                id: 3, 
+                name: "Galaxy Smartphone X5", 
+                category: "phones", 
+                price: 60000, 
+                oldPrice: 72000, 
+                icon: "mobile-alt",
+                description: "Our flagship smartphone with an incredible camera system, powerful performance, and all-day battery life. Capture the universe in stunning detail.",
+                specs: ["6.7\" Super AMOLED Display", "Triple camera system", "128GB Storage", "5G Connectivity", "Fast charging"]
+            },
+            { 
+                id: 4, 
+                name: "Cosmic Smart Watch", 
+                category: "wearables", 
+                price: 24000, 
+                oldPrice: 30000, 
+                icon: "smartwatch",
+                description: "Stay connected and track your fitness with our feature-packed smartwatch. Monitor your health, receive notifications, and more right from your wrist.",
+                specs: ["1.3\" AMOLED Display", "Heart rate monitor", "GPS tracking", "Water resistant", "7-day battery life"]
+            },
+            { 
+                id: 5, 
+                name: "Nebula DSLR Camera", 
+                category: "electronics", 
+                price: 90000, 
+                oldPrice: 108000, 
+                icon: "camera",
+                description: "Capture the cosmos with our professional-grade DSLR camera. Perfect for astrophotography and capturing life's most precious moments in stunning detail.",
+                specs: ["24.2MP Sensor", "4K Video Recording", "3\" Vari-angle Touchscreen", "Wi-Fi & Bluetooth", "Weather-sealed body"]
+            },
+            { 
+                id: 6, 
+                name: "Quantum Gaming Console", 
+                category: "electronics", 
+                price: 45000, 
+                oldPrice: 60000, 
+                icon: "gamepad",
+                description: "Next-generation gaming console with 4K gaming capabilities, VR support, and an extensive library of games for all ages.",
+                specs: ["4K Gaming Support", "1TB Storage", "VR Ready", "Wireless Controller", "Online Multiplayer"]
+            },
+            { 
+                id: 7, 
+                name: "Astro Wireless Earbuds", 
+                category: "audio", 
+                price: 8500, 
+                oldPrice: 12000, 
+                icon: "headphones",
+                description: "Compact wireless earbuds with crystal clear sound, noise isolation, and comfortable fit for all-day use.",
+                specs: ["True Wireless", "20-hour battery with case", "IPX5 Water Resistant", "Touch Controls", "Fast Charging"]
+            },
+            { 
+                id: 8, 
+                name: "Solar Power Bank", 
+                category: "accessories", 
+                price: 3500, 
+                oldPrice: 5000, 
+                icon: "battery-full",
+                description: "High-capacity power bank with solar charging capability. Perfect for outdoor adventures and emergency power backup.",
+                specs: ["20000mAh Capacity", "Solar Charging", "Dual USB Ports", "LED Power Indicator", "Fast Charging"]
+            },
+            { 
+                id: 9, 
+                name: "Lunar Tablet Pro", 
+                category: "phones", 
+                price: 35000, 
+                oldPrice: 45000, 
+                icon: "tablet-alt",
+                description: "Powerful tablet with a stunning display, perfect for work, entertainment, and creative projects.",
+                specs: ["10.5\" Retina Display", "128GB Storage", "Stylus Support", "12-hour battery", "Face ID"]
+            },
+            { 
+                id: 10, 
+                name: "Meteor Mechanical Keyboard", 
+                category: "computers", 
+                price: 7500, 
+                oldPrice: 10000, 
+                icon: "keyboard",
+                description: "Premium mechanical keyboard with customizable RGB lighting and responsive switches for gaming and typing.",
+                specs: ["Mechanical Switches", "RGB Backlighting", "N-Key Rollover", "Braided Cable", "Wrist Rest"]
+            },
+            { 
+                id: 11, 
+                name: "Orbit Wireless Mouse", 
+                category: "computers", 
+                price: 3000, 
+                oldPrice: 4500, 
+                icon: "mouse",
+                description: "Ergonomic wireless mouse with precision tracking and long battery life for comfortable computing.",
+                specs: ["Wireless 2.4GHz", "Optical Sensor", "12-month battery", "Ergonomic Design", "Silent Clicks"]
+            },
+            { 
+                id: 12, 
+                name: "Comet Portable Speaker", 
+                category: "audio", 
+                price: 6000, 
+                oldPrice: 8500, 
+                icon: "music",
+                description: "Compact portable speaker with 360-degree sound, waterproof design, and impressive battery life.",
+                specs: ["360-degree Sound", "IP67 Waterproof", "12-hour battery", "Bluetooth 5.0", "Built-in Mic"]
+            },
+            { 
+                id: 13, 
+                name: "Satellite Smart TV", 
+                category: "electronics", 
+                price: 65000, 
+                oldPrice: 85000, 
+                icon: "tv",
+                description: "Smart TV with 4K resolution, built-in streaming apps, and voice control for the ultimate viewing experience.",
+                specs: ["55\" 4K Display", "Smart TV Platform", "Voice Control", "HDR Support", "Multiple HDMI Ports"]
+            },
+            { 
+                id: 14, 
+                name: "Eclipse Noise Cancelling Earbuds", 
+                category: "audio", 
+                price: 12500, 
+                oldPrice: 18000, 
+                icon: "headphones",
+                description: "Advanced noise cancelling earbuds with transparency mode and exceptional sound quality.",
+                specs: ["Active Noise Cancellation", "Transparency Mode", "Wireless Charging Case", "30-hour battery", "Sweat Resistant"]
+            },
+            { 
+                id: 15, 
+                name: "Nova Gaming Monitor", 
+                category: "computers", 
+                price: 28000, 
+                oldPrice: 38000, 
+                icon: "desktop",
+                description: "High-refresh-rate gaming monitor with stunning visuals and fast response time for competitive gaming.",
+                specs: ["27\" IPS Display", "144Hz Refresh Rate", "1ms Response Time", "AMD FreeSync", "Adjustable Stand"]
+            },
+            { 
+                id: 16, 
+                name: "Pulsar Fitness Tracker", 
+                category: "wearables", 
+                price: 8500, 
+                oldPrice: 12000, 
+                icon: "running",
+                description: "Advanced fitness tracker with heart rate monitoring, sleep tracking, and multiple sport modes.",
+                specs: ["Heart Rate Monitor", "Sleep Tracking", "20 Sport Modes", "7-day battery", "Water Resistant"]
+            },
+            { 
+                id: 17, 
+                name: "Zenith Wireless Router", 
+                category: "electronics", 
+                price: 9500, 
+                oldPrice: 13000, 
+                icon: "wifi",
+                description: "High-speed wireless router with mesh capability for whole-home coverage and seamless connectivity.",
+                specs: ["Wi-Fi 6", "Mesh Compatible", "Gigabit Ports", "Parental Controls", "MU-MIMO Technology"]
+            },
+            { 
+                id: 18, 
+                name: "Aurora Bluetooth Speaker", 
+                category: "audio", 
+                price: 4500, 
+                oldPrice: 6500, 
+                icon: "volume-up",
+                description: "Compact Bluetooth speaker with impressive bass and LED light effects for parties and outdoor use.",
+                specs: ["360-degree Sound", "RGB LED Lights", "10-hour battery", "Bluetooth 5.0", "Built-in Mic"]
+            },
+            { 
+                id: 19, 
+                name: "Vortex Gaming Chair", 
+                category: "accessories", 
+                price: 18000, 
+                oldPrice: 25000, 
+                icon: "chair",
+                description: "Ergonomic gaming chair with lumbar support, adjustable armrests, and premium materials for comfort during long sessions.",
+                specs: ["Ergonomic Design", "Lumbar Support", "Adjustable Armrests", "High-Density Foam", "360-degree Swivel"]
+            },
+            { 
+                id: 20, 
+                name: "Photon Action Camera", 
+                category: "electronics", 
+                price: 22000, 
+                oldPrice: 30000, 
+                icon: "video",
+                description: "Compact action camera with 4K video recording, waterproof housing, and multiple mounting options.",
+                specs: ["4K Video Recording", "Waterproof Case", "Wi-Fi Connectivity", "Image Stabilization", "Wide-angle Lens"]
+            },
+            { 
+                id: 21, 
+                name: "Celestial Smart Bulb", 
+                category: "electronics", 
+                price: 2500, 
+                oldPrice: 3500, 
+                icon: "lightbulb",
+                description: "Smart LED bulb with millions of colors, voice control, and scheduling features for smart home automation.",
+                specs: ["16 Million Colors", "Voice Control", "Scheduling", "Energy Efficient", "No Hub Required"]
+            },
+            { 
+                id: 22, 
+                name: "Nebula Soundbar", 
+                category: "audio", 
+                price: 15000, 
+                oldPrice: 22000, 
+                icon: "tv",
+                description: "Immersive soundbar with Dolby Atmos, wireless subwoofer, and multiple connectivity options for home theater.",
+                specs: ["Dolby Atmos", "Wireless Subwoofer", "Bluetooth", "HDMI ARC", "Wall Mountable"]
+            },
+            { 
+                id: 23, 
+                name: "Stellar USB-C Hub", 
+                category: "accessories", 
+                price: 4500, 
+                oldPrice: 6500, 
+                icon: "plug",
+                description: "Multi-port USB-C hub with HDMI, USB-A, Ethernet, and SD card slots for expanding connectivity.",
+                specs: ["4K HDMI Output", "USB 3.0 Ports", "Gigabit Ethernet", "SD/TF Card Readers", "100W PD Charging"]
+            },
+            { 
+                id: 24, 
+                name: "Cosmic VR Headset", 
+                category: "electronics", 
+                price: 28000, 
+                oldPrice: 40000, 
+                icon: "vr-cardboard",
+                description: "Immersive virtual reality headset with high-resolution displays, built-in audio, and comfortable design.",
+                specs: ["High-Res Displays", "Built-in Audio", "6DOF Tracking", "Adjustable Straps", "Wide Field of View"]
+            },
+            { 
+                id: 25, 
+                name: "Meteor Portable SSD", 
+                category: "computers", 
+                price: 12000, 
+                oldPrice: 18000, 
+                icon: "hdd",
+                description: "High-speed portable SSD with rugged design, fast transfer speeds, and ample storage for professionals.",
+                specs: ["1TB Capacity", "USB 3.2 Gen 2", "Rugged Design", "Password Protection", "3-year Warranty"]
+            },
+            { 
+                id: 26, 
+                name: "Orbit Wireless Charger", 
+                category: "accessories", 
+                price: 3500, 
+                oldPrice: 5000, 
+                icon: "charging-station",
+                description: "Fast wireless charger with LED indicator, compatible with all Qi-enabled devices for convenient charging.",
+                specs: ["15W Fast Charging", "LED Indicator", "Non-slip Surface", "Compact Design", "Overheat Protection"]
+            },
+            { 
+                id: 27, 
+                name: "Solar Bluetooth Keyboard", 
+                category: "computers", 
+                price: 5500, 
+                oldPrice: 8000, 
+                icon: "keyboard",
+                description: "Solar-powered Bluetooth keyboard with backlit keys and multi-device pairing for eco-friendly typing.",
+                specs: ["Solar Powered", "Backlit Keys", "Multi-device Pairing", "Slim Design", "Long Battery Life"]
+            },
+            { 
+                id: 28, 
+                name: "Lunar Desk Lamp", 
+                category: "accessories", 
+                price: 3000, 
+                oldPrice: 4500, 
+                icon: "lamp",
+                description: "Adjustable desk lamp with multiple brightness levels, USB charging port, and modern design.",
+                specs: ["Adjustable Brightness", "USB Charging Port", "Touch Controls", "Modern Design", "Energy Efficient LED"]
+            },
+            { 
+                id: 29, 
+                name: "Eclipse Webcam", 
+                category: "computers", 
+                price: 6500, 
+                oldPrice: 9000, 
+                icon: "camera",
+                description: "High-definition webcam with autofocus, built-in microphone, and privacy shutter for video conferencing.",
+                specs: ["1080p Resolution", "Autofocus", "Built-in Mic", "Privacy Shutter", "Universal Clip"]
+            },
+            { 
+                id: 30, 
+                name: "Nova External Monitor", 
+                category: "computers", 
+                price: 22000, 
+                oldPrice: 32000, 
+                icon: "desktop",
+                description: "Portable external monitor with USB-C connectivity, perfect for extending your workspace on the go.",
+                specs: ["15.6\" IPS Display", "USB-C Connectivity", "Slim Design", "Built-in Stand", "HDR Support"]
+            },
+            { 
+                id: 31, 
+                name: "Pulsar Gaming Headset", 
+                category: "audio", 
+                price: 7500, 
+                oldPrice: 11000, 
+                icon: "headset",
+                description: "Surround sound gaming headset with noise-cancelling microphone and comfortable over-ear design.",
+                specs: ["7.1 Surround Sound", "Noise-cancelling Mic", "RGB Lighting", "Memory Foam Earcups", "Compatible with Multiple Platforms"]
+            },
+            { 
+                id: 32, 
+                name: "Zenith Smart Scale", 
+                category: "wearables", 
+                price: 5000, 
+                oldPrice: 7500, 
+                icon: "weight",
+                description: "Smart scale that measures weight, body fat, muscle mass, and syncs data to your smartphone app.",
+                specs: ["13 Body Metrics", "App Synchronization", "Auto Recognition", "Glass Platform", "Long Battery Life"]
+            },
+            { 
+                id: 33, 
+                name: "Aurora E-Reader", 
+                category: "electronics", 
+                price: 15000, 
+                oldPrice: 22000, 
+                icon: "book",
+                description: "High-resolution e-reader with adjustable warm light, waterproof design, and weeks of battery life.",
+                specs: ["300ppi Display", "Adjustable Warm Light", "Waterproof", "Weeks of Battery", "32GB Storage"]
+            },
+            { 
+                id: 34, 
+                name: "Vortex Microphone", 
+                category: "audio", 
+                price: 8500, 
+                oldPrice: 12000, 
+                icon: "microphone",
+                description: "Professional USB microphone with cardioid pickup pattern, perfect for streaming, podcasting, and recording.",
+                specs: ["Cardioid Pattern", "Plug-and-Play", "Desktop Stand", "Volume Control", "Compatible with Multiple Devices"]
+            },
+            { 
+                id: 35, 
+                name: "Photon Smart Lock", 
+                category: "electronics", 
+                price: 12000, 
+                oldPrice: 18000, 
+                icon: "lock",
+                description: "Smart door lock with fingerprint recognition, keypad, and smartphone control for enhanced home security.",
+                specs: ["Fingerprint Recognition", "Keypad Entry", "Smartphone Control", "Auto-lock Feature", "Backup Keys"]
+            },
+            { 
+                id: 36, 
+                name: "Celestial Air Purifier", 
+                category: "electronics", 
+                price: 18000, 
+                oldPrice: 25000, 
+                icon: "wind",
+                description: "HEPA air purifier with smart sensors, multiple filtration stages, and quiet operation for cleaner indoor air.",
+                specs: ["True HEPA Filter", "Smart Sensors", "4 Filtration Stages", "Quiet Operation", "Auto Mode"]
+            },
+            { 
+                id: 37, 
+                name: "Nebula Projector", 
+                category: "electronics", 
+                price: 25000, 
+                oldPrice: 35000, 
+                icon: "film",
+                description: "Portable projector with 1080p resolution, built-in speakers, and multiple connectivity options for home entertainment.",
+                specs: ["1080p Resolution", "Built-in Speakers", "Multiple Ports", "Portable Design", "Keystone Correction"]
+            },
+            { 
+                id: 38, 
+                name: "Stellar Robot Vacuum", 
+                category: "electronics", 
+                price: 22000, 
+                oldPrice: 32000, 
+                icon: "robot",
+                description: "Smart robot vacuum with mapping technology, app control, and strong suction for automated cleaning.",
+                specs: ["Smart Mapping", "App Control", "Strong Suction", "Auto Recharge", "Multiple Cleaning Modes"]
+            },
+            { 
+                id: 39, 
+                name: "Cosmic Smart Plug", 
+                category: "electronics", 
+                price: 2500, 
+                oldPrice: 4000, 
+                icon: "plug",
+                description: "Wi-Fi smart plug with energy monitoring, scheduling, and voice control for home automation.",
+                specs: ["Wi-Fi Connectivity", "Energy Monitoring", "Scheduling", "Voice Control", "Compact Design"]
+            },
+            { 
+                id: 40, 
+                name: "Meteor Drawing Tablet", 
+                category: "computers", 
+                price: 15000, 
+                oldPrice: 22000, 
+                icon: "pen-alt",
+                description: "Graphics tablet with pressure-sensitive pen, perfect for digital art, photo editing, and design work.",
+                specs: ["Pressure-sensitive Pen", "Large Active Area", "Customizable Shortcuts", "Compatible with Major Software", "Portable Design"]
+            },
+            { 
+                id: 41, 
+                name: "Orbit Fitness Smartwatch", 
+                category: "wearables", 
+                price: 18000, 
+                oldPrice: 25000, 
+                icon: "watch",
+                description: "Advanced fitness smartwatch with GPS, heart rate monitoring, and comprehensive health tracking features.",
+                specs: ["Built-in GPS", "Heart Rate Monitor", "Sleep Tracking", "Water Resistant", "7-day Battery"]
+            },
+            { 
+                id: 42, 
+                name: "Solar Wireless Earbuds Pro", 
+                category: "audio", 
+                price: 12500, 
+                oldPrice: 18000, 
+                icon: "headphones",
+                description: "Professional wireless earbuds with active noise cancellation, transparency mode, and spatial audio.",
+                specs: ["Active Noise Cancellation", "Transparency Mode", "Spatial Audio", "Wireless Charging", "Sweat Resistant"]
+            },
+            { 
+                id: 43, 
+                name: "Lunar Portable Monitor", 
+                category: "computers", 
+                price: 28000, 
+                oldPrice: 38000, 
+                icon: "desktop",
+                description: "Ultra-slim portable monitor with 4K resolution, perfect for professionals who need extra screen space.",
+                specs: ["15.6\" 4K Display", "USB-C Connectivity", "Ultra-slim Design", "HDR Support", "Built-in Stand"]
+            },
+            { 
+                id: 44, 
+                name: "Eclipse Gaming Mouse", 
+                category: "computers", 
+                price: 5500, 
+                oldPrice: 8000, 
+                icon: "mouse",
+                description: "High-precision gaming mouse with customizable RGB lighting, programmable buttons, and ergonomic design.",
+                specs: ["High-Precision Sensor", "Programmable Buttons", "RGB Lighting", "Ergonomic Design", "Braided Cable"]
+            },
+            { 
+                id: 45, 
+                name: "Nova Smart Thermostat", 
+                category: "electronics", 
+                price: 12000, 
+                oldPrice: 18000, 
+                icon: "thermometer-half",
+                description: "Smart thermostat with learning capabilities, remote control, and energy-saving features for efficient home heating.",
+                specs: ["Learning Capability", "Remote Control", "Energy Reports", "Geofencing", "Easy Installation"]
+            },
+            { 
+                id: 46, 
+                name: "Pulsar Bluetooth Receiver", 
+                category: "audio", 
+                price: 2500, 
+                oldPrice: 4000, 
+                icon: "broadcast-tower",
+                description: "Compact Bluetooth receiver that adds wireless connectivity to any audio system with AUX input.",
+                specs: ["Bluetooth 5.0", "AUX Output", "Compact Design", "Long Battery Life", "Easy Pairing"]
+            },
+            { 
+                id: 47, 
+                name: "Zenith Portable Printer", 
+                category: "computers", 
+                price: 15000, 
+                oldPrice: 22000, 
+                icon: "print",
+                description: "Portable photo printer that connects to your smartphone wirelessly for instant printing anywhere.",
+                specs: ["Wireless Connectivity", "High-Quality Prints", "Compact Design", "Rechargeable Battery", "Compatible with Smartphones"]
+            },
+            { 
+                id: 48, 
+                name: "Aurora Smart Light Strip", 
+                category: "electronics", 
+                price: 4500, 
+                oldPrice: 6500, 
+                icon: "lightbulb",
+                description: "RGB smart light strip with millions of colors, voice control, and music sync for ambient lighting.",
+                specs: ["16 Million Colors", "Voice Control", "Music Sync", "Cuttable Design", "Adhesive Backing"]
+            },
+            { 
+                id: 49, 
+                name: "Vortex USB-C Dock", 
+                category: "accessories", 
+                price: 8500, 
+                oldPrice: 12000, 
+                icon: "plug",
+                description: "Comprehensive USB-C docking station with multiple ports for expanding connectivity of modern laptops.",
+                specs: ["Multiple USB Ports", "HDMI Output", "Ethernet Port", "SD Card Reader", "Power Delivery"]
+            },
+            { 
+                id: 50, 
+                name: "Photon Security Camera", 
+                category: "electronics", 
+                price: 9500, 
+                oldPrice: 14000, 
+                icon: "camera",
+                description: "Wireless security camera with night vision, motion detection, and cloud storage for home monitoring.",
+                specs: ["1080p Resolution", "Night Vision", "Motion Detection", "Two-Way Audio", "Cloud Storage"]
+            }
+        ];
+
+        // Cart functionality
+        let cart = [];
+        let isAdminLoggedIn = false;
+        
+        // DOM Elements
+        const adminLoginModal = document.getElementById('adminLoginModal');
+        const closeAdminLogin = document.getElementById('closeAdminLogin');
+        const cancelAdminLogin = document.getElementById('cancelAdminLogin');
+        const submitAdminLogin = document.getElementById('submitAdminLogin');
+        const adminPassword = document.getElementById('adminPassword');
+        const passwordError = document.getElementById('passwordError');
+        const adminLogoutBtn = document.getElementById('adminLogoutBtn');
+        
+        // Cart and product elements
+        const cartIcon = document.getElementById('cartIcon');
+        const cartCount = document.getElementById('cartCount');
+        const cartModal = document.getElementById('cartModal');
+        const closeModal = document.getElementById('closeModal');
+        const cartItems = document.getElementById('cartItems');
+        const emptyCart = document.getElementById('emptyCart');
+        const cartTotal = document.getElementById('cartTotal');
+        const continueShopping = document.getElementById('continueShopping');
+        const checkoutBtn = document.getElementById('checkoutBtn');
+        const cartNotification = document.getElementById('cartNotification');
+        const searchInput = document.getElementById('searchInput');
+        const productsGrid = document.getElementById('productsGrid');
+        const categoryFilter = document.getElementById('categoryFilter');
+        const sortBy = document.getElementById('sortBy');
+        const gridViewBtn = document.getElementById('gridView');
+        const listViewBtn = document.getElementById('listView');
+        const productDetailModal = document.getElementById('productDetailModal');
+        const closeDetailModal = document.getElementById('closeDetailModal');
+        const productDetailBody = document.getElementById('productDetailBody');
+
+        // Format price in Kenyan Shillings
+        function formatPrice(price) {
+            return `Ksh ${parseFloat(price).toLocaleString('en-KE')}`;
+        }
+
+        // Initialize page
+        function initPage() {
+            // Load cart from localStorage if available
+            const savedCart = localStorage.getItem('galaxyStoreCart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+                updateCartCount();
+            }
+            
+            // Check if admin is logged in
+            const adminStatus = localStorage.getItem('galaxyStoreAdmin');
+            if (adminStatus === 'true') {
+                isAdminLoggedIn = true;
+                updateAdminUI();
+            }
+            
+            // Render products
+            renderProducts(products);
+            
+            // Add event listeners
+            setupEventListeners();
+        }
+
+        // Update admin UI
+        function updateAdminUI() {
+            if (isAdminLoggedIn) {
+                document.body.classList.add('admin-logged-in');
+                adminLogoutBtn.style.display = 'block';
+            } else {
+                document.body.classList.remove('admin-logged-in');
+                adminLogoutBtn.style.display = 'none';
+            }
+        }
+
+        // Render products
+        function renderProducts(productsToRender) {
+            productsGrid.innerHTML = '';
+            
+            productsToRender.forEach(product => {
+                const productElement = document.createElement('div');
+                productElement.className = 'product';
+                productElement.innerHTML = `
+                    ${product.oldPrice ? `<span class="sale-badge">SALE</span>` : ''}
+                    <span class="admin-badge">ADMIN</span>
+                    <div class="product-img">
+                        <i class="fas fa-${product.icon}"></i>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">${product.category}</div>
+                        <h3 class="product-title">${product.name}</h3>
+                        <div class="product-price">
+                            <span class="price">${formatPrice(product.price)}</span>
+                            ${product.oldPrice ? `<span class="old-price">${formatPrice(product.oldPrice)}</span>` : ''}
+                        </div>
+                        <div class="product-buttons">
+                            <button class="view-btn" data-id="${product.id}">View Details</button>
+                            <button class="add-cart-btn" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}">
+                                <i class="fas fa-cart-plus"></i> Add to Cart
+                            </button>
+                        </div>
+                        <div class="admin-actions">
+                            <button class="edit-product-btn" data-id="${product.id}">
+                                <i class="fas fa-edit"></i> Edit Product
+                            </button>
+                        </div>
+                    </div>
+                `;
+                productsGrid.appendChild(productElement);
+            });
+            
+            // Add event listeners to buttons
+            document.querySelectorAll('.add-cart-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = this.getAttribute('data-id');
+                    const productName = this.getAttribute('data-name');
+                    const productPrice = this.getAttribute('data-price');
+                    
+                    addToCart(productId, productName, productPrice);
+                });
+            });
+            
+            document.querySelectorAll('.view-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = this.getAttribute('data-id');
+                    showProductDetails(productId);
+                });
+            });
+            
+            // Only add edit button listeners if admin is logged in
+            if (isAdminLoggedIn) {
+                document.querySelectorAll('.edit-product-btn').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const productId = this.getAttribute('data-id');
+                        showEditProductForm(productId);
+                    });
+                });
+            }
+        }
+
+        // Show product details
+        function showProductDetails(productId) {
+            const product = products.find(p => p.id == productId);
+            
+            if (product) {
+                productDetailBody.innerHTML = `
+                    <div class="product-detail-image">
+                        <i class="fas fa-${product.icon}"></i>
+                    </div>
+                    <div class="product-detail-info">
+                        <h2 class="product-detail-title">${product.name}</h2>
+                        <div class="product-detail-category">${product.category}</div>
+                        
+                        <div class="product-detail-price">
+                            <span class="product-detail-current">${formatPrice(product.price)}</span>
+                            ${product.oldPrice ? `<span class="product-detail-old">${formatPrice(product.oldPrice)}</span>` : ''}
+                        </div>
+                        
+                        <p class="product-detail-description">${product.description}</p>
+                        
+                        <div class="product-detail-specs">
+                            <div class="specs-title">Key Features:</div>
+                            <ul class="specs-list">
+                                ${product.specs.map(spec => `<li>${spec}</li>`).join('')}
+                            </ul>
+                        </div>
+                        
+                        <div class="product-detail-actions">
+                            <button class="detail-add-cart" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}">
+                                <i class="fas fa-cart-plus"></i> Add to Cart
+                            </button>
+                            ${isAdminLoggedIn ? `
+                                <button class="edit-product-btn" data-id="${product.id}">
+                                    <i class="fas fa-edit"></i> Edit Product
+                                </button>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+                
+                document.querySelector('.detail-add-cart').addEventListener('click', function() {
+                    const productId = this.getAttribute('data-id');
+                    const productName = this.getAttribute('data-name');
+                    const productPrice = this.getAttribute('data-price');
+                    
+                    addToCart(productId, productName, productPrice);
+                    productDetailModal.style.display = 'none';
+                });
+                
+                if (isAdminLoggedIn) {
+                    document.querySelector('.edit-product-btn').addEventListener('click', function() {
+                        const productId = this.getAttribute('data-id');
+                        showEditProductForm(productId);
+                    });
+                }
+                
+                productDetailModal.style.display = 'block';
+            }
+        }
+
+        // Show edit product form
+        function showEditProductForm(productId) {
+            const product = products.find(p => p.id == productId);
+            
+            if (product) {
+                productDetailBody.innerHTML = `
+                    <div class="product-detail-image">
+                        <i class="fas fa-${product.icon}"></i>
+                    </div>
+                    <div class="product-detail-info">
+                        <h2 class="product-detail-title">Edit Product: ${product.name}</h2>
+                        
+                        <div class="edit-product-form">
+                            <div class="form-group">
+                                <label for="edit-name">Product Name</label>
+                                <input type="text" id="edit-name" value="${product.name}">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="edit-category">Category</label>
+                                <select id="edit-category">
+                                    <option value="electronics" ${product.category === 'electronics' ? 'selected' : ''}>Electronics</option>
+                                    <option value="audio" ${product.category === 'audio' ? 'selected' : ''}>Audio</option>
+                                    <option value="computers" ${product.category === 'computers' ? 'selected' : ''}>Computers</option>
+                                    <option value="phones" ${product.category === 'phones' ? 'selected' : ''}>Phones & Tablets</option>
+                                    <option value="wearables" ${product.category === 'wearables' ? 'selected' : ''}>Wearables</option>
+                                    <option value="accessories" ${product.category === 'accessories' ? 'selected' : ''}>Accessories</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="edit-price">Price (Ksh)</label>
+                                <input type="number" id="edit-price" value="${product.price}">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="edit-old-price">Old Price (Ksh) - Optional</label>
+                                <input type="number" id="edit-old-price" value="${product.oldPrice || ''}">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="edit-description">Description</label>
+                                <textarea id="edit-description">${product.description}</textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Specifications</label>
+                                <div id="specs-container">
+                                    ${product.specs.map(spec => `
+                                        <div class="spec-input" style="display: flex; margin-bottom: 8px;">
+                                            <input type="text" value="${spec}" style="flex: 1;">
+                                            <button type="button" class="remove-spec-btn">Remove</button>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                                <button type="button" class="add-spec-btn" style="margin-top: 10px;">Add Specification</button>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="button" class="cancel-btn" id="cancel-edit">Cancel</button>
+                                <button type="button" class="save-btn" id="save-product" data-id="${product.id}">Save Changes</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                document.querySelector('.add-spec-btn').addEventListener('click', function() {
+                    const specsContainer = document.getElementById('specs-container');
+                    const specInput = document.createElement('div');
+                    specInput.className = 'spec-input';
+                    specInput.style = 'display: flex; margin-bottom: 8px;';
+                    specInput.innerHTML = `
+                        <input type="text" style="flex: 1;" placeholder="Enter specification">
+                        <button type="button" class="remove-spec-btn">Remove</button>
+                    `;
+                    specsContainer.appendChild(specInput);
+                    
+                    specInput.querySelector('.remove-spec-btn').addEventListener('click', function() {
+                        specsContainer.removeChild(specInput);
+                    });
+                });
+                
+                document.querySelectorAll('.remove-spec-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        this.parentElement.remove();
+                    });
+                });
+                
+                document.getElementById('save-product').addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    const name = document.getElementById('edit-name').value;
+                    const category = document.getElementById('edit-category').value;
+                    const price = document.getElementById('edit-price').value;
+                    const oldPrice = document.getElementById('edit-old-price').value;
+                    const description = document.getElementById('edit-description').value;
+                    
+                    const specInputs = document.querySelectorAll('#specs-container input');
+                    const specs = Array.from(specInputs).map(input => input.value).filter(spec => spec.trim() !== '');
+                    
+                    updateProduct(id, name, category, price, oldPrice, description, specs);
+                });
+                
+                document.getElementById('cancel-edit').addEventListener('click', function() {
+                    showProductDetails(productId);
+                });
+            }
+        }
+
+        // Update product
+        function updateProduct(id, name, category, price, oldPrice, description, specs) {
+            const productIndex = products.findIndex(p => p.id == id);
+            
+            if (productIndex !== -1) {
+                products[productIndex] = {
+                    ...products[productIndex],
+                    name,
+                    category,
+                    price: parseFloat(price),
+                    oldPrice: oldPrice ? parseFloat(oldPrice) : null,
+                    description,
+                    specs
+                };
+                
+                renderProducts(products);
+                alert('Product updated successfully!');
+                showProductDetails(id);
+            }
+        }
+
+        // Admin login function
+        function adminLogin() {
+            const password = adminPassword.value;
+            
+            if (password === ADMIN_PASSWORD) {
+                isAdminLoggedIn = true;
+                localStorage.setItem('galaxyStoreAdmin', 'true');
+                updateAdminUI();
+                adminLoginModal.style.display = 'none';
+                adminPassword.value = '';
+                passwordError.style.display = 'none';
+                
+                renderProducts(products);
+                alert('Admin login successful! You can now edit products.');
+            } else {
+                passwordError.style.display = 'block';
+                adminPassword.value = '';
+            }
+        }
+
+        // Admin logout function
+        function adminLogout() {
+            isAdminLoggedIn = false;
+            localStorage.removeItem('galaxyStoreAdmin');
+            updateAdminUI();
+            renderProducts(products);
+            alert('Admin logout successful!');
+        }
+
+        // Add to cart functionality
+        function addToCart(id, name, price) {
+            const existingItem = cart.find(item => item.id === id);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: id,
+                    name: name,
+                    price: price,
+                    quantity: 1
+                });
+            }
+            
+            cartNotification.classList.add('show');
+            setTimeout(() => {
+                cartNotification.classList.remove('show');
+            }, 3000);
+            
+            updateCartCount();
+            saveCart();
+        }
+
+        // Update cart count
+        function updateCartCount() {
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            cartCount.textContent = totalItems;
+        }
+
+        // Save cart to localStorage
+        function saveCart() {
+            localStorage.setItem('galaxyStoreCart', JSON.stringify(cart));
+        }
+
+        // Update cart modal
+        function updateCartModal() {
+            cartItems.innerHTML = '';
+            
+            if (cart.length === 0) {
+                emptyCart.style.display = 'block';
+                checkoutBtn.disabled = true;
+            } else {
+                emptyCart.style.display = 'none';
+                checkoutBtn.disabled = false;
+                
+                cart.forEach(item => {
+                    const cartItemElement = document.createElement('div');
+                    cartItemElement.className = 'cart-item';
+                    cartItemElement.innerHTML = `
+                        <div class="cart-item-img">
+                            <i class="fas fa-${getProductIcon(item.id)}"></i>
+                        </div>
+                        <div class="cart-item-details">
+                            <div class="cart-item-title">${item.name}</div>
+                            <div class="cart-item-price">${formatPrice(item.price)} x ${item.quantity}</div>
+                            <div class="cart-item-actions">
+                                <div class="quantity-control">
+                                    <button class="quantity-btn minus" data-id="${item.id}">-</button>
+                                    <span>${item.quantity}</span>
+                                    <button class="quantity-btn plus" data-id="${item.id}">+</button>
+                                </div>
+                                <button class="remove-item" data-id="${item.id}">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    cartItems.appendChild(cartItemElement);
+                });
+                
+                document.querySelectorAll('.quantity-btn.plus').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const id = this.getAttribute('data-id');
+                        updateQuantity(id, 1);
+                    });
+                });
+                
+                document.querySelectorAll('.quantity-btn.minus').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const id = this.getAttribute('data-id');
+                        updateQuantity(id, -1);
+                    });
+                });
+                
+                document.querySelectorAll('.remove-item').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const id = this.getAttribute('data-id');
+                        removeFromCart(id);
+                    });
+                });
+            }
+            
+            updateCartTotals();
+        }
+
+        // Get product icon based on ID
+        function getProductIcon(id) {
+            const icons = {
+                1: 'headphones',
+                2: 'laptop',
+                3: 'mobile-alt',
+                4: 'smartwatch',
+                5: 'camera',
+                6: 'gamepad',
+                7: 'headphones',
+                8: 'battery-full',
+                9: 'tablet-alt',
+                10: 'keyboard',
+                11: 'mouse',
+                12: 'music',
+                13: 'tv',
+                14: 'headphones',
+                15: 'desktop',
+                16: 'running',
+                17: 'wifi',
+                18: 'volume-up',
+                19: 'chair',
+                20: 'video',
+                21: 'lightbulb',
+                22: 'tv',
+                23: 'plug',
+                24: 'vr-cardboard',
+                25: 'hdd',
+                26: 'charging-station',
+                27: 'keyboard',
+                28: 'lamp',
+                29: 'camera',
+                30: 'desktop',
+                31: 'headset',
+                32: 'weight',
+                33: 'book',
+                34: 'microphone',
+                35: 'lock',
+                36: 'wind',
+                37: 'film',
+                38: 'robot',
+                39: 'plug',
+                40: 'pen-alt',
+                41: 'watch',
+                42: 'headphones',
+                43: 'desktop',
+                44: 'mouse',
+                45: 'thermometer-half',
+                46: 'broadcast-tower',
+                47: 'print',
+                48: 'lightbulb',
+                49: 'plug',
+                50: 'camera'
+            };
+            return icons[id] || 'star';
+        }
+
+        // Update item quantity
+        function updateQuantity(id, change) {
+            const item = cart.find(item => item.id === id);
+            if (item) {
+                item.quantity += change;
+                
+                if (item.quantity <= 0) {
+                    removeFromCart(id);
+                } else {
+                    updateCartModal();
+                    updateCartCount();
+                    saveCart();
+                }
+            }
+        }
+
+        // Remove item from cart
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            updateCartModal();
+            updateCartCount();
+            saveCart();
+        }
+
+        // Update cart totals
+        function updateCartTotals() {
+            const total = cart.reduce((sum, item) => sum + (parseFloat(item.price) * item.quantity), 0);
+            cartTotal.textContent = formatPrice(total);
+        }
+
+        // Generate WhatsApp link
+        function generateWhatsAppLink() {
+            const phone = "254796648525";
+            let message = "Hello! I'd like to place an order from Galaxy Store:%0A%0A";
+            
+            cart.forEach(item => {
+                message += `- ${item.name} x${item.quantity} - ${formatPrice(item.price)} each%0A`;
+            });
+            
+            const total = cart.reduce((sum, item) => sum + (parseFloat(item.price) * item.quantity), 0);
+            message += `%0ATotal: ${formatPrice(total)}`;
+            
+            return `https://wa.me/${phone}?text=${message}`;
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Keyboard shortcut for admin access (Ctrl + Alt + A)
+            document.addEventListener('keydown', function(e) {
+                if (e.ctrlKey && e.altKey && e.key === 'a') {
+                    e.preventDefault();
+                    if (!isAdminLoggedIn) {
+                        adminLoginModal.style.display = 'block';
+                    }
+                }
+                
+                if (e.key === 'Escape') {
+                    cartModal.style.display = 'none';
+                    productDetailModal.style.display = 'none';
+                    adminLoginModal.style.display = 'none';
+                    passwordError.style.display = 'none';
+                }
+            });
+
+            // Admin login modal events
+            closeAdminLogin.addEventListener('click', function() {
+                adminLoginModal.style.display = 'none';
+                passwordError.style.display = 'none';
+                adminPassword.value = '';
+            });
+            
+            cancelAdminLogin.addEventListener('click', function() {
+                adminLoginModal.style.display = 'none';
+                passwordError.style.display = 'none';
+                adminPassword.value = '';
+            });
+            
+            submitAdminLogin.addEventListener('click', adminLogin);
+            
+            adminPassword.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    adminLogin();
+                }
+            });
+            
+            adminLogoutBtn.addEventListener('click', adminLogout);
+            
+            // Cart events
+            cartIcon.addEventListener('click', function() {
+                updateCartModal();
+                cartModal.style.display = 'block';
+            });
+            
+            closeModal.addEventListener('click', function() {
+                cartModal.style.display = 'none';
+            });
+            
+            closeDetailModal.addEventListener('click', function() {
+                productDetailModal.style.display = 'none';
+            });
+            
+            continueShopping.addEventListener('click', function() {
+                cartModal.style.display = 'none';
+            });
+            
+            checkoutBtn.addEventListener('click', function() {
+                window.open(generateWhatsAppLink(), '_blank');
+            });
+            
+            // Close modals when clicking outside
+            window.addEventListener('click', function(event) {
+                if (event.target === cartModal) {
+                    cartModal.style.display = 'none';
+                }
+                if (event.target === productDetailModal) {
+                    productDetailModal.style.display = 'none';
+                }
+                if (event.target === adminLoginModal) {
+                    adminLoginModal.style.display = 'none';
+                }
+            });
+            
+            // Search functionality
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                const filteredProducts = products.filter(product => 
+                    product.name.toLowerCase().includes(searchTerm) || 
+                    product.category.toLowerCase().includes(searchTerm)
+                );
+                renderProducts(filteredProducts);
+            });
+            
+            // Category filter
+            categoryFilter.addEventListener('change', function() {
+                const category = this.value;
+                if (category === 'all') {
+                    renderProducts(products);
+                } else {
+                    const filteredProducts = products.filter(product => product.category === category);
+                    renderProducts(filteredProducts);
+                }
+            });
+            
+            // Sort by
+            sortBy.addEventListener('change', function() {
+                const sortValue = this.value;
+                let sortedProducts = [...products];
+                
+                switch(sortValue) {
+                    case 'price-low':
+                        sortedProducts.sort((a, b) => a.price - b.price);
+                        break;
+                    case 'price-high':
+                        sortedProducts.sort((a, b) => b.price - a.price);
+                        break;
+                    case 'name':
+                        sortedProducts.sort((a, b) => a.name.localeCompare(b.name));
+                        break;
+                    default:
+                        sortedProducts.sort((a, b) => a.id - b.id);
+                }
+                
+                renderProducts(sortedProducts);
+            });
+            
+            // View options
+            gridViewBtn.addEventListener('click', function() {
+                productsGrid.className = 'products-grid';
+                gridViewBtn.classList.add('active');
+                listViewBtn.classList.remove('active');
+            });
+            
+            listViewBtn.addEventListener('click', function() {
+                productsGrid.className = 'products-list';
+                listViewBtn.classList.add('active');
+                gridViewBtn.classList.remove('active');
+            });
+        }
+
+        // Initialize the page
+        initPage();
+    </script>
+</body>
+</html>

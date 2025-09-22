@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shipping Information - SpaceZone</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-blue: #1a73e8;
+            --dark-blue: #0d47a1;
+            --light-blue: #e8f0fe;
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+            --text-dark: #202124;
+            --text-light: #5f6368;
+            --success: #28a745;
+            --warning: #ffc107;
+        }
+
+        body {
+            background-color: var(--light-gray);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            color: var(--primary-blue);
+            font-size: 28px;
+            margin-right: 10px;
+        }
+
+        .logo h1 {
+            color: var(--primary-blue);
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 25px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary-blue);
+        }
+
+        .auth-buttons {
+            display: flex;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--primary-blue);
+            color: var(--primary-blue);
+            margin-right: 10px;
+        }
+
+        .btn-primary {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .btn-outline:hover {
+            background: var(--light-blue);
+        }
+
+        .btn-primary:hover {
+            background: var(--dark-blue);
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(to right, var(--primary-blue), var(--dark-blue));
+            color: var(--white);
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        .page-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+
+        .breadcrumb li {
+            margin: 0 10px;
+        }
+
+        .breadcrumb li a {
+            color: var(--light-blue);
+            text-decoration: none;
+        }
+
+        .breadcrumb li:after {
+            content: ">";
+            margin-left: 15px;
+            color: var(--light-blue);
+        }
+
+        .breadcrumb li:last-child:after {
+            content: "";
+            margin-left: 0;
+        }
+
+        /* Shipping Options */
+        .shipping-options {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--text-dark);
+            font-size: 2rem;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .option-card {
+            background: var(--white);
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option-card.featured {
+            border: 2px solid var(--primary-blue);
+            transform: scale(1.03);
+        }
+
+        .option-card.featured:before {
+            content: "Most Popular";
+            position: absolute;
+            top: 15px;
+            right: -30px;
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 5px 30px;
+            font-size: 0.8rem;
+            transform: rotate(45deg);
+        }
+
+        .option-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .option-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--light-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .option-icon i {
+            font-size: 30px;
+            color: var(--primary-blue);
+        }
+
+        .option-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--dark-blue);
+        }
+
+        .option-card .price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+        }
+
+        .option-card .delivery-time {
+            background: var(--light-blue);
+            color: var(--primary-blue);
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .option-card ul {
+            text-align: left;
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .option-card ul li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .option-card ul li:before {
+            content: "✓";
+            color: var(--success);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        /* Shipping Timeline */
+        .shipping-timeline {
+            background: var(--white);
+            padding: 60px 0;
+        }
+
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline:before {
+            content: "";
+            position: absolute;
+            top: 40px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--light-blue);
+            z-index: 1;
+        }
+
+        .timeline-step {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            flex: 1;
+        }
+
+        .step-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--white);
+            border: 3px solid var(--light-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+
+        .step-icon i {
+            font-size: 30px;
+            color: var(--primary-blue);
+        }
+
+        .step-number {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 30px;
+            height: 30px;
+            background: var(--primary-blue);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .timeline-step h4 {
+            margin-bottom: 10px;
+            color: var(--dark-blue);
+        }
+
+        /* International Shipping */
+        .international-shipping {
+            padding: 60px 0;
+            background: var(--light-blue);
+        }
+
+        .shipping-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+            background: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .shipping-table th, .shipping-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .shipping-table th {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .shipping-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .shipping-table tr:hover {
+            background: #f9f9f9;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            padding: 60px 0;
+            background: var(--white);
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            margin-bottom: 20px;
+            border: 1px solid var(--light-blue);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 20px;
+            background: var(--light-blue);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+        }
+
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 20px;
+            max-height: 200px;
+        }
+
+        /* Track Order */
+        .track-order {
+            padding: 60px 0;
+            text-align: center;
+            background: linear-gradient(to right, var(--primary-blue), var(--dark-blue));
+            color: var(--white);
+        }
+
+        .track-form {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+        }
+
+        .track-form input {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            font-size: 16px;
+        }
+
+        .track-form button {
+            padding: 15px 25px;
+            background: var(--text-dark);
+            color: var(--white);
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-blue);
+            color: var(--white);
+            padding: 40px 0;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+
+        .footer-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul li a {
+            color: var(--light-gray);
+            text-decoration: none;
+        }
+
+        .footer-section ul li a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            nav ul {
+                margin: 20px 0;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            nav ul li {
+                margin: 5px 10px;
+            }
+
+            .auth-buttons {
+                margin-top: 15px;
+            }
+
+            .timeline {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .timeline:before {
+                display: none;
+            }
+
+            .timeline-step {
+                margin-bottom: 30px;
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .track-form {
+                flex-direction: column;
+            }
+
+            .track-form input {
+                border-radius: 4px;
+                margin-bottom: 10px;
+            }
+
+            .track-form button {
+                border-radius: 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                  
+                    <h1>Galaxy Store</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="home.html">Home</a></li>
+                        <li><a href="categories.html">Categories</a></li>
+                           <li><a href="Contact.html">Contact</a></li>
+                      
+                        <li><a href="#" style="color: var(--primary-blue);">Shipping Info</a></li>
+                    </ul>
+                </nav>
+                
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h2>Shipping Information</h2>
+            <ul class="breadcrumb">
+                <li><a href="#">Home</a></li>
+                <li>Shipping Info</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Shipping Options -->
+   
+    <!-- Shipping Timeline -->
+    <section class="shipping-timeline">
+        <div class="container">
+            <h2 class="section-title">How Our Shipping Process Works</h2>
+            <div class="timeline">
+                <div class="timeline-step">
+                    <div class="step-icon">
+                        <i class="fas fa-box"></i>
+                        <div class="step-number">1</div>
+                    </div>
+                    <h4>Order Placed</h4>
+                    <p>We receive your order and begin processing</p>
+                </div>
+                
+                <div class="timeline-step">
+                    <div class="step-icon">
+                        <i class="fas fa-cogs"></i>
+                        <div class="step-number">2</div>
+                    </div>
+                    <h4>Processing</h4>
+                    <p>We prepare your items for shipment</p>
+                </div>
+                
+                <div class="timeline-step">
+                    <div class="step-icon">
+                        <i class="fas fa-truck-loading"></i>
+                        <div class="step-number">3</div>
+                    </div>
+                    <h4>Dispatched</h4>
+                    <p>Your order leaves our warehouse</p>
+                </div>
+                
+                <div class="timeline-step">
+                    <div class="step-icon">
+                        <i class="fas fa-house-user"></i>
+                        <div class="step-number">4</div>
+                    </div>
+                    <h4>Delivered</h4>
+                    <p>Your order arrives at your doorstep</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- International Shipping -->
+    <section class="international-shipping">
+        <div class="container">
+            <h2 class="section-title">Shipping rates</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 30px;">We ship to over 4 counties Nationwide. Below are estimated delivery times and costs for some of our most popular destinations.</p>
+            
+            <table class="shipping-table">
+                <thead>
+                    <tr>
+                        <th>Region</th>
+                        <th>Delivery Time</th>
+                        <th>Shipping Cost</th>
+                     
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Nairobi</td>
+                        <td>3-5 business days</td>
+                        <td>Ksh.200</td>
+                      
+                    </tr>
+                    <tr>
+                        <td>Nyeri</td>
+                        <td>5-8 business days</td>
+                        <td>Ksh.290</td>
+                      
+                    </tr>
+                    <tr>
+                        <td>Kajiado</td>
+                        <td>5-10 business days</td>
+                        <td>Ksh.350</td>
+                     
+                    </tr>
+                    <tr>
+                        <td>Kiambu</td>
+                        <td>7-14 business days</td>
+                        <td>Ksh.320</td>
+                     
+                    </tr>
+                
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-title">Shipping FAQs</h2>
+            
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How long does shipping take? <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Standard shipping takes 5-8 business days within Kenya. Express shipping takes 3-5 business days. International shipping times vary by destination but typically range from 14-25 business days.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Do you offer free shipping? <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we offer free standard shipping on all orders over $90 within the Kenya. International orders qualify for free shipping at higher thresholds that vary by destination.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Can I track my order? <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, once your order has been shipped, you will receive a confirmation email with a tracking number. You can use this tracking number on our interface to monitor your package's journey.</p>
+                    </div>
+                </div>
+                
+               
+            </div>
+        </div>
+    </section>
+
+    <!-- Track Order -->
+    
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+               
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                       
+                        
+                        <li><a href="Returns & Exchange.html">Returns & Exchanges</a></li>
+                        <li><a href="Shipping Info.html">Shipping Info</a></li>
+                         <li><a href="Our Story.html">Our Story</a></li>
+                        <li><a href="Support.html">Support</a></li>
+                    </ul>
+                </div>
+               
+               
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 SpaceZone. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script>
+        // FAQ accordion functionality
+        const faqItems = document.querySelectorAll('.faq-item');
+        
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            
+            question.addEventListener('click', () => {
+                // Close all other items
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+                
+                // Toggle current item
+                item.classList.toggle('active');
+            });
+        });
+
+        // Shipping option selection
+        const optionCards = document.querySelectorAll('.option-card');
+        optionCards.forEach(card => {
+            card.addEventListener('click', function() {
+                const optionName = this.querySelector('h3').textContent;
+                alert(`You selected ${optionName} shipping. In a real implementation, this would set your shipping preference.`);
+            });
+        });
+
+        // Track order form submission
+        const trackForm = document.querySelector('.track-form');
+        trackForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const orderNumber = this.querySelector('input[type="text"]').value;
+            alert(`Tracking order #${orderNumber}. In a real implementation, this would show tracking details.`);
+        });
+
+        // Add some animations to the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate the timeline steps on load
+            const timelineSteps = document.querySelectorAll('.timeline-step');
+            timelineSteps.forEach((step, index) => {
+                step.style.transform = 'translateY(20px)';
+                step.style.opacity = '0';
+                step.style.transition = 'all 0.5s ease';
+                
+                setTimeout(() => {
+                    step.style.transform = 'translateY(0)';
+                    step.style.opacity = '1';
+                }, 200 * index);
+            });
+            
+            // Animate the option cards
+            const optionCards = document.querySelectorAll('.option-card');
+            optionCards.forEach((card, index) => {
+                card.style.transform = 'translateY(20px)';
+                card.style.opacity = '0';
+                card.style.transition = 'all 0.5s ease';
+                
+                setTimeout(() => {
+                    card.style.transform = 'translateY(0)';
+                    card.style.opacity = '1';
+                }, 300 + (100 * index));
+            });
+        });
+    </script>
+</body>
+</html>
